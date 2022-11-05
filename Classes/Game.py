@@ -8,9 +8,8 @@ from Classes.Alien import Alien
 class Game:
 
     def __init__(self, screen):
+        self.text = None
         self.score = 0
-        # Set name of window
-        pygame.display.set_caption("This is a game !")
         # Instantiate all necessary
         self.screen = screen
         self.background = pygame.image.load('images/background.jpg')
@@ -22,12 +21,11 @@ class Game:
         # Aliens
         self.waiting_alien = pygame.time.get_ticks() + 500
         self.all_aliens = pygame.sprite.Group()
-        self.spawnAlien()
+        self.spawn_alien()
         self.is_alive = True;
         self.player = Player(self)
-        pygame.font.init()
-        self.font = pygame.font.Font(None, 50)
-
+        self.font = None
+        self.max_time_spawn = 2500
 
     def handling_events(self):
         # Create event for quit game
@@ -57,35 +55,37 @@ class Game:
 
     def display(self):
         # Apply background
-        self.screen.blit(self.background, (-200, 0))
+        self.screen.blit(self.background, (0, 0))
         # Display player
         self.player.draw(self.screen)
         self.player.all_shoots.draw(self.screen)
         # Display aliens
         self.all_aliens.draw(self.screen)
         # Refresh screen
+        self.font = pygame.font.Font(None, 50)
         self.text = self.font.render("Score : %d" % self.score, True, (255, 255, 255))
         self.screen.blit(self.text, (30, 30))
         pygame.display.flip()
 
-    def spawnAlien(self):
+    def spawn_alien(self):
         now = pygame.time.get_ticks()
         random_wait = random.randint(1000, 2500)
         if self.waiting_alien + random_wait < now:
             self.all_aliens.add(Alien(self))
             self.waiting_alien = now
+            self.max_time_spawn = self.max_time_spawn * (1 - (self.max_time_spawn / 30000))
 
-    def check_collision(self, sprite, group):
+    @staticmethod
+    def check_collision(sprite, group):
         return pygame.sprite.spritecollide(sprite, group, True, pygame.sprite.collide_mask)
 
     def run(self):
-        # Run loop
         while self.running:
-            self.spawnAlien()
+            self.spawn_alien()
             self.handling_events()
             self.update()
             self.display()
             self.clock.tick(60)
             if self.check_collision(self.player, self.all_aliens) or self.is_alive == False:
                 self.running = False
-
+                return self.score

@@ -8,7 +8,7 @@ class Alien(pygame.sprite.Sprite):
         super().__init__()
         self.game = game
         self.height_size = pygame.display.get_window_size()[1]
-        self.speed = self.height_size/130 * (1 + (self.game.waiting_alien / 30000))
+        self.speed = self.height_size/130 * (1 + (self.game.waiting_alien / 80000))
         self.x_size = self.height_size/10
         self.y_size = self.height_size/14
         # Add image to player and scale it
