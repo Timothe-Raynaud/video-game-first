@@ -8,9 +8,9 @@ class Player(pygame.sprite.Sprite):
         # Instantiate the sprite
         super().__init__()
         # Init can be modified here :
-        self.x_size = 50
-        self.y_size = 80
-        self.speed = 15
+        self.x_size = pygame.display.get_window_size()[1]/14
+        self.y_size = pygame.display.get_window_size()[1]/8
+        self.speed = pygame.display.get_window_size()[0]/80
         # Add image to player and scale it
         self.image = pygame.image.load("images/spaceShip.png")
         self.image = pygame.transform.scale(self.image, (self.x_size, self.y_size))
@@ -34,16 +34,16 @@ class Player(pygame.sprite.Sprite):
         # Create variable key
         keys = pygame.key.get_pressed()
         # Listen if "q" or "d" is pushed and associate to velocity the logic value for x move
-        if keys[pygame.K_q] and self.rect.x > self.border_left:
+        if keys[pygame.K_q] and self.rect.x > self.border_left and not keys[pygame.K_d]:
             self.velocity[0] = -1
-        elif keys[pygame.K_d] and self.rect.x < self.border_right:
+        elif keys[pygame.K_d] and self.rect.x < self.border_right and not keys[pygame.K_q]:
             self.velocity[0] = 1
         else:
             self.velocity[0] = 0
         # Listen if "z" or "s" is pushed and associate to velocity the logic value for y move
-        if keys[pygame.K_z] and self.rect.y > self.border_top:
+        if keys[pygame.K_z] and self.rect.y > self.border_top and not keys[pygame.K_s]:
             self.velocity[1] = -1
-        elif keys[pygame.K_s] and self.rect.y < self.border_bottom:
+        elif keys[pygame.K_s] and self.rect.y < self.border_bottom and not keys[pygame.K_z]:
             self.velocity[1] = 1
         else:
             self.velocity[1] = 0
