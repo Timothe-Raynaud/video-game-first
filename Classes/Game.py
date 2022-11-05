@@ -8,6 +8,7 @@ from Classes.Alien import Alien
 class Game:
 
     def __init__(self, screen):
+        self.score = 0
         # Set name of window
         pygame.display.set_caption("This is a game !")
         # Instantiate all necessary
@@ -15,7 +16,6 @@ class Game:
         self.background = pygame.image.load('images/background.jpg')
         self.running = True
         self.clock = pygame.time.Clock()
-        self.player = Player()
         # Set shoot stats
         self.last_shoot_time = pygame.time.get_ticks()
         self.waiting_shoot = 300
@@ -24,6 +24,10 @@ class Game:
         self.all_aliens = pygame.sprite.Group()
         self.spawnAlien()
         self.is_alive = True;
+        self.player = Player(self)
+        pygame.font.init()
+        self.font = pygame.font.Font(None, 50)
+
 
     def handling_events(self):
         # Create event for quit game
@@ -46,19 +50,22 @@ class Game:
             shoot.move()
             if self.check_collision(shoot, self.all_aliens):
                 shoot.remove()
+                self.score += 1
         # Aliens move
         for alien in self.all_aliens:
             alien.move()
 
     def display(self):
         # Apply background
-        self.screen.blit(self.background, (-550, 0))
+        self.screen.blit(self.background, (-200, 0))
         # Display player
         self.player.draw(self.screen)
         self.player.all_shoots.draw(self.screen)
         # Display aliens
         self.all_aliens.draw(self.screen)
         # Refresh screen
+        self.text = self.font.render("Score : %d" % self.score, True, (255, 255, 255))
+        self.screen.blit(self.text, (30, 30))
         pygame.display.flip()
 
     def spawnAlien(self):

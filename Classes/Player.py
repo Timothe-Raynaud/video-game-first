@@ -4,13 +4,14 @@ from Classes.Shoot import Shoot
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, game):
         # Instantiate the sprite
         super().__init__()
         # Init can be modified here :
+        self.game = game
         self.x_size = pygame.display.get_window_size()[1]/14
         self.y_size = pygame.display.get_window_size()[1]/8
-        self.speed = pygame.display.get_window_size()[0]/80
+        self.speed = pygame.display.get_window_size()[0]/80 * (1 + (self.game.waiting_alien / 30000))
         # Add image to player and scale it
         self.image = pygame.image.load("images/spaceShip.png")
         self.image = pygame.transform.scale(self.image, (self.x_size, self.y_size))
