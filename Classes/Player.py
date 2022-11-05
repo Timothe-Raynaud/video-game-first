@@ -1,6 +1,7 @@
 import pygame
 from Classes.Shoot import Shoot
 
+
 class Player(pygame.sprite.Sprite):
 
     def __init__(self):
@@ -26,6 +27,8 @@ class Player(pygame.sprite.Sprite):
         self.isAlive = True
         # Init move variable
         self.velocity = [0, 0]
+        # Init shoots
+        self.all_shoots = pygame.sprite.Group()
 
     def move(self):
         # Create variable key
@@ -52,7 +55,5 @@ class Player(pygame.sprite.Sprite):
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-    def shooting(self, screen):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE]:
-            shoot = Shoot(self.rect.x + (self.x_size / 3), self.rect.y)
+    def shooting(self):
+        self.all_shoots.add(Shoot(self))

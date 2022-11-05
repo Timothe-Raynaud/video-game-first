@@ -19,17 +19,25 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+            # For the event of type key down
+            if event.type == pygame.KEYDOWN:
+                # If is space we create a shoot
+                if event.key == pygame.K_SPACE:
+                    self.player.shooting()
 
     def update(self):
         # Add movement of player
         self.player.move()
+        # Add movement of shoots
+        for shoot in self.player.all_shoots:
+            shoot.move()
 
     def display(self):
         # Apply background
         self.screen.blit(self.background, (-550, -200))
         # Display player
         self.player.draw(self.screen)
-        self.player.shooting(self.screen)
+        self.player.all_shoots.draw(self.screen)
         # Refresh screen
         pygame.display.flip()
 
