@@ -23,12 +23,11 @@ class Player(pygame.sprite.Sprite):
         self.border_right = pygame.display.get_window_size()[0] - self.x_size
         self.border_top = 0
         self.border_bottom = pygame.display.get_window_size()[1] - self.y_size
-        # Init state of player
-        self.isAlive = True
         # Init move variable
         self.velocity = [0, 0]
         # Init shoots
         self.all_shoots = pygame.sprite.Group()
+
 
     def move(self):
         # Create variable key

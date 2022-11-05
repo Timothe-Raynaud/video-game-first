@@ -19,6 +19,7 @@ class Shoot(pygame.sprite.Sprite):
         # Create player
         self.player = player
 
+
     def remove(self):
         self.player.all_shoots.remove(self)
 

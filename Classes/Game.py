@@ -23,6 +23,7 @@ class Game:
         self.waiting_alien = pygame.time.get_ticks() + 500
         self.all_aliens = pygame.sprite.Group()
         self.spawnAlien()
+        self.is_alive = True;
 
     def handling_events(self):
         # Create event for quit game
@@ -43,6 +44,8 @@ class Game:
         # Add movement of shoots
         for shoot in self.player.all_shoots:
             shoot.move()
+            if self.check_collision(shoot, self.all_aliens):
+                shoot.remove()
         # Aliens move
         for alien in self.all_aliens:
             alien.move()
@@ -65,6 +68,9 @@ class Game:
             self.all_aliens.add(Alien(self))
             self.waiting_alien = now
 
+    def check_collision(self, sprite, group):
+        return pygame.sprite.spritecollide(sprite, group, True, pygame.sprite.collide_mask)
+
     def run(self):
         # Run loop
         while self.running:
@@ -73,3 +79,6 @@ class Game:
             self.update()
             self.display()
             self.clock.tick(60)
+            if self.check_collision(self.player, self.all_aliens) or self.is_alive == False:
+                self.running = False
+
