@@ -18,6 +18,9 @@ class Shoot(pygame.sprite.Sprite):
         self.rect.y = player.rect.y
         # Create player
         self.player = player
+        shoot = pygame.mixer.Sound("music/shoot.mp3")
+        pygame.mixer.Sound.set_volume(shoot, 0.2)
+        pygame.mixer.Sound.play(shoot)
 
 
     def remove(self):

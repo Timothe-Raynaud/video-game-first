@@ -48,6 +48,9 @@ class Game:
             shoot.move()
             if self.check_collision(shoot, self.all_aliens):
                 shoot.remove()
+                explosion = pygame.mixer.Sound("music/explosion.mp3")
+                pygame.mixer.Sound.set_volume(explosion, 0.2)
+                pygame.mixer.Sound.play(explosion)
                 self.score += 1
         # Aliens move
         for alien in self.all_aliens:
@@ -62,7 +65,7 @@ class Game:
         # Display aliens
         self.all_aliens.draw(self.screen)
         # Refresh screen
-        self.font = pygame.font.Font(None, 50)
+        self.font = pygame.font.Font('font/retro.ttf', 50)
         self.text = self.font.render("Score : %d" % self.score, True, (255, 255, 255))
         self.screen.blit(self.text, (30, 30))
         pygame.display.flip()
