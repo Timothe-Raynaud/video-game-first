@@ -26,6 +26,7 @@ class Game:
         self.player = Player(self)
         self.font = None
         self.max_time_spawn = 2500
+        self.clock = pygame.time.Clock()
 
     def handling_events(self):
         # Create event for quit game
@@ -92,3 +93,4 @@ class Game:
             if self.check_collision(self.player, self.all_aliens) or self.is_alive == False:
                 self.running = False
                 return self.score
+            self.clock.tick(60)
