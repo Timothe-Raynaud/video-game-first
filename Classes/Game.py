@@ -19,13 +19,13 @@ class Game:
         self.last_shoot_time = pygame.time.get_ticks()
         self.waiting_shoot = 300
         # Aliens
+        self.max_time_spawn = 3000
         self.waiting_alien = pygame.time.get_ticks() + 500
         self.all_aliens = pygame.sprite.Group()
         self.spawn_alien()
         self.is_alive = True;
         self.player = Player(self)
         self.font = None
-        self.max_time_spawn = 2500
         self.clock = pygame.time.Clock()
 
     def handling_events(self):
@@ -73,11 +73,12 @@ class Game:
 
     def spawn_alien(self):
         now = pygame.time.get_ticks()
-        random_wait = random.randint(1000, 2500)
+        random_wait = random.randint(800, self.max_time_spawn)
         if self.waiting_alien + random_wait < now:
             self.all_aliens.add(Alien(self))
             self.waiting_alien = now
-            self.max_time_spawn = self.max_time_spawn * (1 - (self.max_time_spawn / 30000))
+            if self.max_time_spawn > 800:
+                self.max_time_spawn -= 30
 
     @staticmethod
     def check_collision(sprite, group):

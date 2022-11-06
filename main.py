@@ -32,6 +32,7 @@ while running:
         game = Game(screen)
         score = game.run()
         playing = False
+        game = None
         main_mixer.load("music/17 - Memory.mp3")
         main_mixer.play()
 
@@ -59,8 +60,6 @@ while running:
         screen.blit(text, (700, 600))
         screen.blit(text2, (400, 700))
         pygame.display.flip()
-
-
 
 # Quit game
 pygame.quit()

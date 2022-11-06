@@ -8,7 +8,7 @@ class Shoot(pygame.sprite.Sprite):
         super().__init__()
         # Init can be modified here :
         self.speed = 20
-        self.size = pygame.display.get_window_size()[0]/18
+        self.size = pygame.display.get_window_size()[0]/40
         # Add image to player and scale it
         self.image = pygame.image.load('images/shoot.png')
         self.image = pygame.transform.scale(self.image, (self.size, self.size))
@@ -21,7 +21,6 @@ class Shoot(pygame.sprite.Sprite):
         shoot = pygame.mixer.Sound("music/shoot.mp3")
         pygame.mixer.Sound.set_volume(shoot, 0.2)
         pygame.mixer.Sound.play(shoot)
-
 
     def remove(self):
         self.player.all_shoots.remove(self)
